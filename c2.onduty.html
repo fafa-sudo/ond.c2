@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Members Management and Duty Status</title>
+    <style>
+        /* Basic styles */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            border: 5px solid #FF69B4; /* Thick border */
+        }
+        h1 {
+            background-color: #6633CC; /* Violet color */
+            padding: 10px;
+            border-radius: 10px;
+            color: white;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid gray;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #E6E6E6; /* Light gray color */
+        }
+        input[type="text"], input[type="password"], input[type="date"] {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: calc(100% - 22px);
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+        }
+        .duty-label {
+            padding: 10px;
+            border-radius: 5px;
+            color: black; /* Black text color */
+            display: inline-block; /* So they display as blocks */
+            margin-bottom: 10px; /* Adding margin for spacing */
+        }
+        .on-duty {
+            background-color: #FFFF99; /* Yellow color for on-duty */
+        }
+        .off-duty {
+            background-color: #ADD8E6; /* Light Blue color for off-duty */
+        }
+        p {
+            background-color: #E6E6E6; /* Light gray color */
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        #result {
+            background-color: #ADD8E6; /* Blue color */
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px; /* Added margin for spacing */
+        }
+        label {
+            background-color: #F7DC6F; /* Yellowish color */
+            padding: 10px;
+            border-radius: 10px;
+            color: black; /* Change text color to black */
+        }
+        .bold {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="loginTitle">Login</h1>
+    <div id="loginDiv">
+        <label for="username">Username</label>
+        <input type="text" id="username" />
+        <label for="password">Password</label>
+        <input type="password" id="password" />
+        <button type="button" id="loginButton">Login</button>
+        <p id="loginMessage" style="color:red;"></p>
+    </div>
+
+    <div id="tablesDiv" style="display: none;">
+        <h1>Duty Status</h1>
+        <label for="dateInput">Select a date:</label>
+        <input type="date" id="dateInput" value="2024-08-04">
+        <br><br>
+        <button type="button" onclick="calculateDayOfWeek()">Calculate</button>
+        <br><br>
+        <p id="result"></p>
+
+        <h1>Team Members</h1>
+
+        <h2>TEAMA 1</h2>
+        <div>
+            <div id="teamA1InputFields">
+                <label for="teamA1Rank">Rank</label>
+                <input type="text" id="teamA1Rank" placeholder="Rank" />
+                <label for="teamA1FirstName">First Name</label>
+                <input type="text" id="teamA1FirstName" placeholder="First Name" />
+                <label for="teamA1LastName">Last Name</label>
+                <input type="text" id="teamA1LastName" placeholder="Last Name" />
+                <label for="teamA1Remark">Remark</label>
+                <input type="text" id="teamA1Remark" placeholder="Remark" />
+            </div>
+            <button type="button" id="addTeamA1Btn">Add</button>
+        </div>
+        <table id="tableA1">
+            <thead>
+                <tr>
+                    <th>S/No</th>
+                    <th>Rank</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Remark</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="membersA1"></tbody>
+        </table>
+
+        <h2>TEAMA 2</h2>
+        <div>
+            <div id="teamA2InputFields">
+                <label for="teamA2Rank">Rank</label>
+                <input type="text" id="teamA2Rank" placeholder="Rank" />
+                <label for="teamA2FirstName">First Name</label>
+                <input type="text" id="teamA2FirstName" placeholder="First Name" />
+                <label for="teamA2LastName">Last Name</label>
+                <input type="text" id="teamA2LastName" placeholder="Last Name" />
+                <label for="teamA2Remark">Remark</label>
+                <input type="text" id="teamA2Remark" placeholder="Remark" />
+            </div>
+            <button type="button" id="addTeamA2Btn">Add</button>
+        </div>
+        <table id="tableA2">
+            <thead>
+                <tr>
+                    <th>S/No</th>
+                    <th>Rank</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Remark</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="membersA2"></tbody>
+        </table>
+
+        <h2>TEAMB 1</h2>
+        <div>
+            <div id="teamB1InputFields">
+                <label for="teamB1Rank">Rank</label>
+                <input type="text" id="teamB1Rank" placeholder="Rank" />
+                <label for="teamB1FirstName">First Name</label>
+                <input type="text" id="teamB1FirstName" placeholder="First Name" />
+                <label for="teamB1LastName">Last Name</label>
+                <input type="text" id="teamB1LastName" placeholder="Last Name" />
+                <label for="teamB1Remark">Remark</label>
+                <input type="text" id="teamB1Remark" placeholder="Remark" />
+            </div>
+            <button type="button" id="addTeamB1Btn">Add</button>
+        </div>
+        <table id="tableB1">
+            <thead>
+                <tr>
+                    <th>S/No</th>
+                    <th>Rank</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Remark</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="membersB1"></tbody>
+        </table>
+
+        <h2>TEAMB 2</h2>
+        <div>
+            <div id="teamB2InputFields">
+                <label for="teamB2Rank">Rank</label>
+                <input type="text" id="teamB2Rank" placeholder="Rank" />
+                <label for="teamB2FirstName">First Name</label>
+                <input type="text" id="teamB2FirstName" placeholder="First Name" />
+                <label for="teamB2LastName">Last Name</label>
+                <input type="text" id="teamB2LastName" placeholder="Last Name" />
+                <label for="teamB2Remark">Remark</label>
+                <input type="text" id="teamB2Remark" placeholder="Remark" />
+            </div>
+            <button type="button" id="addTeamB2Btn">Add</button>
+        </div>
+        <table id="tableB2">
+            <thead>
+                <tr>
+                    <th>S/No</th>
+                    <th>Rank</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Remark</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="membersB2"></tbody>
+        </table>
+    </div>
+
+    <script>
+        const adminUsers = Array.from({ length: 8 }, (_, i) => `admin${i + 1}`); // Array ["admin1", "admin2", ..., "admin8"]
+        const viewerUsers = Array.from({ length: 10 }, (_, i) => `viewer${i + 1}`); // Array ["viewer1", "viewer2", ..., "viewer10"]
+
+        let currentUser = null;
+
+        // Load existing members from localStorage
+        const loadMembers = () => {
+            const teams = ['A1', 'A2', 'B1', 'B2'];
+            teams.forEach((team) => {
+                const members = JSON.parse(localStorage.getItem(`members${team}`)) || [];
+                renderMembers(`members${team}`, members);
+            });
+        };
+
+        const renderMembers = (tableId, members) => {
+            const tbody = document.getElementById(tableId);
+            tbody.innerHTML = ''; // Clear existing members
+            members.forEach((member, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${member.rank}</td>
+                    <td>${member.firstName}</td>
+                    <td>${member.lastName}</td>
+                    <td>${member.remark}</td>
+                    <td>
+                        <button class="editButton" data-index="${index}" style="display: ${currentUser === 'admin' ? 'inline-block' : 'none'};">Edit</button>
+                        <button class="deleteButton" data-index="${index}" style="display: ${currentUser === 'admin' ? 'inline-block' : 'none'};">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        };
+
+        const login = () => {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (adminUsers.includes(username) && password === username) {
+                currentUser = 'admin';
+                showInputFields(true);
+                showAddButtons(true);
+            } else if (viewerUsers.includes(username) && password === username) {
+                currentUser = 'viewer';
+                showInputFields(false);
+                showAddButtons(false);
+            } else {
+                document.getElementById('loginMessage').innerText = 'Invalid username or password.';
+                return;
+            }
+
+            document.getElementById('loginDiv').style.display = 'none';
+            document.getElementById('loginTitle').style.display = 'none'; // Hide the login title
+            document.getElementById('tablesDiv').style.display = 'block';
+            loadMembers();
+        };
+
+        function showInputFields(isAdmin) {
+            const inputFields = document.querySelectorAll('#teamA1InputFields, #teamA2InputFields, #teamB1InputFields, #teamB2InputFields');
+            inputFields.forEach(inputField => {
+                inputField.style.display = isAdmin ? 'block' : 'none';
+            });
+        }
+
+        function showAddButtons(isAdmin) {
+            const addButtons = document.querySelectorAll('#addTeamA1Btn, #addTeamA2Btn, #addTeamB1Btn, #addTeamB2Btn');
+            addButtons.forEach(button => {
+                button.style.display = isAdmin ? 'inline-block' : 'none';
+            });
+        }
+
+        document.getElementById('loginButton').addEventListener('click', login);
+        document.getElementById('password').addEventListener('keydown', function(event) {
+            if (event.key === "Enter") {
+                login();
+            }
+        });
+
+        document.getElementById('username').addEventListener('keydown', function(event) {
+            if (event.key === "Enter") {
+                // Optionally log in if enter is pressed while focusing on username as well
+                login();
+            }
+        });
+
+        const addMember = (team) => {
+            const rankInput = document.getElementById(`team${team}Rank`);
+            const firstNameInput = document.getElementById(`team${team}FirstName`);
+            const lastNameInput = document.getElementById(`team${team}LastName`);
+            const remarkInput = document.getElementById(`team${team}Remark`);
+            const rank = rankInput.value;
+            const firstName = firstNameInput.value;
+            const lastName = lastNameInput.value;
+            const remark = remarkInput.value; // Leave empty if not provided
+
+            // Altered validation to only require rank, first name, and last name
+            if (!rank || !firstName || !lastName) return; // Ensure rank, first name, and last name are filled
+
+            const members = JSON.parse(localStorage.getItem(`members${team}`)) || [];
+            members.push({ rank, firstName, lastName, remark: remark || '' }); // Store remark as empty string if not filled
+            localStorage.setItem(`members${team}`, JSON.stringify(members));
+            
+            // Clear the input fields
+            rankInput.value = ''; 
+            firstNameInput.value = ''; 
+            lastNameInput.value = ''; 
+            remarkInput.value = ''; 
+            
+            loadMembers(); // Refresh members list
+        };
+
+        const deleteMember = (team, index) => {
+            const members = JSON.parse(localStorage.getItem(`members${team}`)) || [];
+            members.splice(index, 1);
+            localStorage.setItem(`members${team}`, JSON.stringify(members));
+            loadMembers();
+        };
+
+        const editMember = (team, index, rank, firstName, lastName, remark) => {
+            const members = JSON.parse(localStorage.getItem(`members${team}`)) || [];
+            members[index] = { rank, firstName, lastName, remark };
+            localStorage.setItem(`members${team}`, JSON.stringify(members));
+            loadMembers();
+        };
+
+        // Adding event listeners for add buttons
+        document.getElementById('addTeamA1Btn').addEventListener('click', () => {
+            addMember('A1');
+        });
+        document.getElementById('addTeamA2Btn').addEventListener('click', () => {
+            addMember('A2');
+        });
+        document.getElementById('addTeamB1Btn').addEventListener('click', () => {
+            addMember('B1');
+        });
+        document.getElementById('addTeamB2Btn').addEventListener('click', () => {
+            addMember('B2');
+        });
+
+        // Delegating events for edit and delete buttons
+        document.getElementById('tablesDiv').addEventListener('click', (event) => {
+            if (event.target.classList.contains('deleteButton')) {
+                const team = event.target.closest('table').id === 'tableA1' ? 'A1' : 
+                             event.target.closest('table').id === 'tableA2' ? 'A2' : 
+                             event.target.closest('table').id === 'tableB1' ? 'B1' : 'B2';
+                const index = event.target.dataset.index;
+                deleteMember(team, index);
+            }
+            if (event.target.classList.contains('editButton')) {
+                const team = event.target.closest('table').id === 'tableA1' ? 'A1' : 
+                             event.target.closest('table').id === 'tableA2' ? 'A2' : 
+                             event.target.closest('table').id === 'tableB1' ? 'B1' : 'B2';
+                const index = event.target.dataset.index;
+                const currentMembers = JSON.parse(localStorage.getItem(`members${team}`)) || [];
+                const newRank = prompt("Enter new rank:", currentMembers[index].rank);
+                const newFirstName = prompt("Enter new first name:", currentMembers[index].firstName);
+                const newLastName = prompt("Enter new last name:", currentMembers[index].lastName);
+                const newRemark = prompt("Enter new remark:", currentMembers[index].remark);
+                if (newRank && newFirstName && newLastName) {
+                    editMember(team, index, newRank, newFirstName, newLastName, newRemark || ''); // Allow empty remarks
+                }
+            }
+        });
+        
+        // Duty Status Functionality
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                calculateDayOfWeek();
+            }
+        });
+        
+        function calculateDayOfWeek() {
+            const inputDate = document.getElementById("dateInput").value;
+            const parsedDate = new Date(inputDate);
+
+            if (!isNaN(parsedDate)) {
+                const currentDate = new Date();
+                const currentDay = currentDate.toLocaleDateString(undefined, { day: 'numeric' });
+                const currentMonth = currentDate.toLocaleDateString(undefined, { month: 'long' });
+                const currentYear = currentDate.getFullYear();
+                const currentDayOfWeek = currentDate.toLocaleDateString(undefined, { weekday: 'long' });
+                const dayOfWeek = parsedDate.toLocaleDateString(undefined, { weekday: 'long' });
+                const dutyStatus = getDutyStatus(parsedDate);
+
+                document.getElementById("result").innerHTML = `
+                    Today's date is ${currentDay} ${currentMonth} ${currentYear}, On ${currentDayOfWeek}<br><br>
+                    ${parsedDate.toLocaleDateString()} is on ${dayOfWeek}<br><br>
+                    ${dutyStatus}`;
+            } else {
+                document.getElementById("result").innerHTML = "Invalid date.";
+            }
+        }
+
+        function getGroupStatus(dayIndex, groupName) {
+            let groupStatusHTML = ``;
+            if (dayIndex === 0 || dayIndex === 2) {
+                groupStatusHTML += `<label class="duty-label off-duty">${groupName} 1: Off duty</label><br>
+                                    <label class="duty-label off-duty">${groupName} 2: Off duty</label><br>`;
+            } else if (dayIndex === 1) {
+                groupStatusHTML += `<label class="duty-label on-duty">${groupName} 1: On duty during the Day</label><br>
+                                    <label class="duty-label on-duty">${groupName} 2: On duty during the Night</label><br>`;
+            } else if (dayIndex === 3) {
+                groupStatusHTML += `<label class="duty-label on-duty">${groupName} 1: On duty during the Night</label><br>
+                                    <label class="duty-label on-duty">${groupName} 2: On duty during the Day</label><br>`;
+            }
+            return groupStatusHTML;
+        }
+
+        function getDutyStatus(date) {
+            const startDate1 = new Date(2024, 1, 13); // TEAM A starts duty
+            const startDate2 = new Date(2024, 1, 14); // TEAM B starts duty
+
+            const difference1 = date - startDate1;
+            const difference2 = date - startDate2;
+
+            const daysDifference1 = Math.floor(difference1 / (1000 * 60 * 60 * 24));
+            const daysDifference2 = Math.floor(difference2 / (1000 * 60 * 60 * 24));
+
+            const cycleLength = 4; // Number of days in the duty cycle
+            const dayIndex1 = daysDifference1 % cycleLength;
+            const dayIndex2 = daysDifference2 % cycleLength;
+
+            const TEAMAStatus = getGroupStatus(dayIndex1, "TEAM A");
+            const TEAMBStatus = getGroupStatus(dayIndex2, "TEAM B");
+
+            return `${TEAMAStatus}<br>${TEAMBStatus}`;
+        }
+    </script>
+</body>
+</html>
